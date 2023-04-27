@@ -1,6 +1,6 @@
 from rest_framework import routers
-from rest_framework.authtoken import views
-from django.urls import include, path, re_path
+from django.views.generic import TemplateView
+from django.urls import include, path
 from api.views import CommentViewSet, GroupViewSet, PostViewSet
 
 router_v1 = routers.DefaultRouter()
@@ -16,10 +16,7 @@ router_v1.register('groups',
 
 
 urlpatterns = [
-     path('v1/api-token-auth/',
-         views.obtain_auth_token),
-     path('v1/',
-         include(router_v1.urls)),
-     path('v1/auth/', include('djoser.urls')),
-     re_path(r'^auth/', include('djoser.urls.authtoken')),
+    path('v1/', include(router_v1.urls)),
+    path('v1/', include('djoser.urls')),
+    path('v1/', include('djoser.urls.jwt')),
 ]
