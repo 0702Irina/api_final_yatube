@@ -1,7 +1,5 @@
-from emoji import emojize
 from rest_framework import serializers
 from posts.models import Post, Group, Comment, Follow, User
-from yatube_api.settings import USER_EMOJI
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -59,6 +57,6 @@ class FollowSerializer(serializers.ModelSerializer):
     def validate(self, data):
         if data['user'] == data['following']:
             raise serializers.ValidationError(
-                f'Прости, но ты не можешь подписаться на себя {emojize(USER_EMOJI)}'
+                'Прости, но ты не можешь подписаться на себя 💔'
             )
         return data

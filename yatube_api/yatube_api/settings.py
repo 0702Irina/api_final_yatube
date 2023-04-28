@@ -87,7 +87,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-USER_EMOJI = (':broken_heart:',)
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
 
 REST_FRAMEWORK = {
