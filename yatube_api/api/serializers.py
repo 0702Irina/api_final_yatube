@@ -7,6 +7,9 @@ from posts.models import (
     User
 )
 
+REFOLLOW = 'Ты уже подписан на этого автора'
+FOLLOW_YOURSELF = 'Прости, но ты не можешь подписаться на себя 💔'
+
 
 class PostSerializer(serializers.ModelSerializer):
     author = serializers.SlugRelatedField(
@@ -51,17 +54,17 @@ class FollowSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ('user', 'following')
         model = Follow
-        validators = [
+        validators = (
             serializers.UniqueTogetherValidator(
                 queryset=Follow.objects.all(),
                 fields=('user', 'following'),
-                message=('Ты уже подписан на этого автора')
-            )
-        ]
+                message=REFOLLOW,
+            ),
+        )
 
     def validate(self, data):
         if data['user'] == data['following']:
             raise serializers.ValidationError(
-                'Прости, но ты не можешь подписаться на себя 💔'
+                FOLLOW_YOURSELF
             )
         return data
