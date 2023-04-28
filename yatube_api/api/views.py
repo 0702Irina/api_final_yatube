@@ -41,8 +41,10 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = GroupSerializer
     permission_classes = (IsAuthor,)
 
+
 def create(self, request):
-        return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+    return Response(status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
@@ -69,7 +71,7 @@ class FollowViewSet(viewsets.ModelViewSet):
         filters.SearchFilter
     )
     search_fields = ('user__username', 'following__username')
-    filterset_fields = ('user', 'following') 
+    filterset_fields = ('user', 'following')
 
     def get_queryset(self):
         user = get_object_or_404(User, username=self.request.user.username)

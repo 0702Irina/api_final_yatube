@@ -1,5 +1,4 @@
 from rest_framework import routers
-from django.views.generic import TemplateView
 from django.urls import include, path
 from api.views import (
     CommentViewSet,
