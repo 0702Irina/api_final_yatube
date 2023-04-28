@@ -1,5 +1,11 @@
 from rest_framework import serializers
-from posts.models import Post, Group, Comment, Follow, User
+from posts.models import (
+    Post,
+    Group,
+    Comment,
+    Follow,
+    User
+)
 
 
 class PostSerializer(serializers.ModelSerializer):
@@ -43,16 +49,15 @@ class FollowSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = '__all__'
+        fields = ('user', 'following')
         model = Follow
-        class Meta:
-            validators = [
-                serializers.UniqueTogetherValidator(
-                    queryset=Follow.objects.all(),
-                    fields=('following', 'user'),
-                    message=('Ты уже подписан на этого автора')
-                )
-            ]
+        validators = [
+            serializers.UniqueTogetherValidator(
+                queryset=Follow.objects.all(),
+                fields=('user', 'following'),
+                message=('Ты уже подписан на этого автора')
+            )
+        ]
 
     def validate(self, data):
         if data['user'] == data['following']:
